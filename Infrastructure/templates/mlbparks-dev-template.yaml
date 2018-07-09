@@ -32,7 +32,7 @@ objects:
     db_username: ${DB_USERNAME}
     db_password: ${DB_PASSWORD}
     db_name: ${DB_NAME}
-    app_name: ${APP_NAME}
+    app_name: "MLB Parks (Dev)"
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -221,9 +221,4 @@ parameters:
   displayName: DB_NAME
   description: db name
   value: parks
-  required: true
-- name: APP_NAME
-  displayName: APP_NAME
-  description: app name
-  value: "MLB Parks (Dev)"
   required: true

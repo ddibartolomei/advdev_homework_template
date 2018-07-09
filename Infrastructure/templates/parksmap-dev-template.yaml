@@ -27,7 +27,7 @@ objects:
   metadata:
     name: parksmap-config
   data:
-    app_name: ${APP_NAME}
+    app_name: "ParksMap (Dev)"
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -157,9 +157,4 @@ parameters:
   displayName: GUID
   description: guid
   value: ddibarto
-  required: true
-- name: APP_NAME
-  displayName: APP_NAME
-  description: app name
-  value: "ParksMap (Dev)"
   required: true

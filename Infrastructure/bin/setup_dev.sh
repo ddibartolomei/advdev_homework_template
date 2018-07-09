@@ -29,7 +29,6 @@ oc new-app -f ../templates/mlbparks-dev-template.yaml \
 --param DB_USERNAME=${DB_USERNAME} \
 --param DB_PASSWORD=${DB_PASSWORD} \
 --param DB_NAME=${DB_NAME} \
---param APP_NAME="MLB Parks (Dev)" \
 --param GUID=${GUID} \
 -n ${GUID}-parks-dev
 
@@ -39,11 +38,10 @@ oc new-app -f ../templates/nationalparks-dev-template.yaml \
 --param DB_USERNAME=${DB_USERNAME} \
 --param DB_PASSWORD=${DB_PASSWORD} \
 --param DB_NAME=${DB_NAME} \
---param APP_NAME="National Parks (Dev)" \
 --param GUID=${GUID} \
 -n ${GUID}-parks-dev
 
-oc new-app -f ../templates/parksmap-dev-template.yaml --param APP_NAME="ParksMap (Dev)" --param GUID=${GUID} -n ${GUID}-parks-dev
+oc new-app -f ../templates/parksmap-dev-template.yaml --param GUID=${GUID} -n ${GUID}-parks-dev
 
 #oc new-build --binary=true --name="mlbparks" --image-stream=jboss-eap70-openshift:1.7 -n ${GUID}-parks-dev
 #oc new-app ${GUID}-parks-dev/mlbparks:0.0-0 --name=mlbparks --allow-missing-imagestream-tags=true -n ${GUID}-parks-dev

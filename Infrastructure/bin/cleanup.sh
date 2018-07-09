@@ -11,5 +11,5 @@ echo "Removing all Homework Projects for GUID=$GUID"
 #oc delete project $GUID-nexus
 #oc delete project $GUID-sonarqube
 #oc delete project $GUID-jenkins
-oc delete project $GUID-parks-dev
-#oc delete project $GUID-parks-prod
+#oc delete project $GUID-parks-dev
+oc delete project $GUID-parks-prod
