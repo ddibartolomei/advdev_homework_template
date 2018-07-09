@@ -27,3 +27,19 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 # * CLUSTER: the base url of the cluster used (e.g. na39.openshift.opentlc.com)
 
 # To be Implemented by Student
+
+oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi --param VOLUME_CAPACITY=4Gi -n ${GUID}-jenkins
+# Alter resources assigned to pod
+oc rollout pause dc jenkins -n ${GUID}-jenkins
+oc set resources dc jenkins --requests=memory=2Gi,cpu=1 --limits=memory=4Gi,cpu=2 -n ${GUID}-jenkins
+oc rollout resume dc jenkins -n ${GUID}-jenkins
+
+# Push Jenkins slave maven image with skopeo support
+docker build ../extra -t docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-appdev:v3.9
+docker login -u $(oc whoami) -p $(oc whoami -t) docker-registry-default.apps.${CLUSTER}
+docker push docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-appdev:v3.9
+
+# Create build config pipelines
+oc process -f ../templates/mlbparks-pipeline-template.yaml --param REPO=${REPO} --param GUID=${GUID} --param CLUSTER=${CLUSTER} | oc create -f - -n ${GUID}-jenkins
+oc process -f ../templates/nationalparks-pipeline-template.yaml --param REPO=${REPO} --param GUID=${GUID} --param CLUSTER=${CLUSTER} | oc create -f - -n ${GUID}-jenkins
+oc process -f ../templates/parksmap-pipeline-template.yaml --param REPO=${REPO} --param GUID=${GUID} --param CLUSTER=${CLUSTER} | oc create -f - -n ${GUID}-jenkins
