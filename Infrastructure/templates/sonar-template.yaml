@@ -4,7 +4,7 @@ metadata:
   annotations:
     description: The SonarQube OpenShift template
     tags: instant-app,sonarqube
-  name: ${GUID}-sonarqube-template
+  name: sonarqube-template
 objects:
 - apiVersion: v1
   kind: Service

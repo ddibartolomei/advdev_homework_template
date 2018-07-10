@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: ${GUID}-nationalparks-dev-template
+  name: nationalparks-dev-template
 objects:
 - apiVersion: v1
   kind: ImageStream

@@ -23,9 +23,21 @@ DB_USERNAME="mongodb"
 DB_PASSWORD="mongodb"
 DB_NAME="parks"
 DB_REPLICASET="rs0"
+DB_KEYFILE_VALUE="12345678901234567890"
 
-#oc new-app mongodb-persistent --param MONGODB_DATABASE="${DB_NAME}" --param MONGODB_USER="${DB_USERNAME}" --param MONGODB_PASSWORD="${DB_PASSWORD}" --param MONGODB_ADMIN_PASSWORD="mongodb_admin_password" -n ${GUID}-parks-dev
+# Create DB
+oc new-app -f ../templates/mongodb-statefulset-template.yaml \
+--param MONGODB_ADMIN_PASSWORD=mongodb_admin_password \
+--param MONGODB_USER=${DB_USERNAME} \
+--param MONGODB_PASSWORD=${DB_PASSWORD} \
+--param MONGODB_DATABASE=${DB_NAME} \
+--param MONGODB_REPLICA_NAME=${DB_REPLICASET} \
+--param MONGODB_KEYFILE_VALUE=${DB_KEYFILE_VALUE} \
+--param VOLUME_CAPACITY=1Gi \
+--param MEMORY_LIMIT=1Gi \
+-n ${GUID}-parks-prod
 
+# Create apps
 oc new-app -f ../templates/mlbparks-prod-template.yaml \
 --param DB_HOST=${DB_HOST} \
 --param DB_PORT=27017 \
@@ -33,7 +45,6 @@ oc new-app -f ../templates/mlbparks-prod-template.yaml \
 --param DB_PASSWORD=${DB_PASSWORD} \
 --param DB_NAME=${DB_NAME} \
 --param DB_REPLICASET=${DB_REPLICASET} \
---param GUID=${GUID} \
 -n ${GUID}-parks-prod
 
 oc new-app -f ../templates/nationalparks-prod-template.yaml \
@@ -43,7 +54,6 @@ oc new-app -f ../templates/nationalparks-prod-template.yaml \
 --param DB_PASSWORD=${DB_PASSWORD} \
 --param DB_NAME=${DB_NAME} \
 --param DB_REPLICASET=${DB_REPLICASET} \
---param GUID=${GUID} \
 -n ${GUID}-parks-prod
 
-oc new-app -f ../templates/parksmap-prod-template.yaml --param GUID=${GUID} -n ${GUID}-parks-prod
+oc new-app -f ../templates/parksmap-prod-template.yaml -n ${GUID}-parks-prod

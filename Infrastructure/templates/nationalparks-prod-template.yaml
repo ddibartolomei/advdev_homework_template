@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: ${GUID}-nationalparks-prod-template
+  name: nationalparks-prod-template
 objects:
 - apiVersion: v1
   kind: ConfigMap
@@ -286,11 +286,6 @@ objects:
     sessionAffinity: None
     type: ClusterIP
 parameters:
-- name: GUID
-  displayName: GUID
-  description: guid
-  value: ddibarto
-  required: true
 - name: DB_HOST
   displayName: DB_HOST
   description: db host

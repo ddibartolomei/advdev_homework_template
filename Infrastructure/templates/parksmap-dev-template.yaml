@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: ${GUID}-parksmap-dev-template
+  name: parksmap-dev-template
 objects:
 - apiVersion: v1
   kind: ImageStream
