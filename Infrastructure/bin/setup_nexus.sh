@@ -40,9 +40,10 @@ echo "Checking if Nexus is Ready..."
  sleep 10
 done
 
+oc project ${GUID}-nexus
 echo "Downloading script to setup Nexus repositories and Docker registry"
 curl -o setup_nexus3.sh -s https://raw.githubusercontent.com/wkulhanek/ocp_advanced_development_resources/master/nexus/setup_nexus3.sh
 chmod +x setup_nexus3.sh
 echo "Executing script to setup Nexus repositories and Docker registry"
-./setup_nexus3.sh admin admin123 http://$(oc get route nexus3 --template='{{ .spec.host }} -n ${GUID}-nexus')
+./setup_nexus3.sh admin admin123 http://$(oc get route nexus3 --template='{{ .spec.host }}')
 rm setup_nexus3.sh
