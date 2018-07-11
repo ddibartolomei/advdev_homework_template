@@ -26,7 +26,7 @@ DB_REPLICASET="rs0"
 DB_KEYFILE_VALUE="12345678901234567890"
 
 # Create DB
-oc new-app -f ../templates/mongodb-statefulset-template.yaml \
+oc new-app -f ./Infrastructure/templates/mongodb-statefulset-template.yaml \
 --param MONGODB_ADMIN_PASSWORD=mongodb_admin_password \
 --param MONGODB_USER=${DB_USERNAME} \
 --param MONGODB_PASSWORD=${DB_PASSWORD} \
@@ -38,7 +38,7 @@ oc new-app -f ../templates/mongodb-statefulset-template.yaml \
 -n ${GUID}-parks-prod
 
 # Create apps
-oc new-app -f ../templates/mlbparks-prod-template.yaml \
+oc new-app -f ./Infrastructure/templates/mlbparks-prod-template.yaml \
 --param DB_HOST=${DB_HOST} \
 --param DB_PORT=27017 \
 --param DB_USERNAME=${DB_USERNAME} \
@@ -47,7 +47,7 @@ oc new-app -f ../templates/mlbparks-prod-template.yaml \
 --param DB_REPLICASET=${DB_REPLICASET} \
 -n ${GUID}-parks-prod
 
-oc new-app -f ../templates/nationalparks-prod-template.yaml \
+oc new-app -f ./Infrastructure/templates/nationalparks-prod-template.yaml \
 --param DB_HOST=${DB_HOST} \
 --param DB_PORT=27017 \
 --param DB_USERNAME=${DB_USERNAME} \
@@ -56,4 +56,4 @@ oc new-app -f ../templates/nationalparks-prod-template.yaml \
 --param DB_REPLICASET=${DB_REPLICASET} \
 -n ${GUID}-parks-prod
 
-oc new-app -f ../templates/parksmap-prod-template.yaml -n ${GUID}-parks-prod
+oc new-app -f ./Infrastructure/templates/parksmap-prod-template.yaml -n ${GUID}-parks-prod
