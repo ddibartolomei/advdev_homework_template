@@ -35,9 +35,12 @@ oc set resources dc jenkins --requests=memory=2Gi,cpu=1 --limits=memory=4Gi,cpu=
 oc rollout resume dc jenkins -n ${GUID}-jenkins
 
 # Push Jenkins slave maven image with skopeo support
+systemctl enable docker
+systemctl start docker
 docker build ./Infrastructure/extra -t docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
 docker login -u $(oc whoami) -p $(oc whoami -t) docker-registry-default.apps.${CLUSTER}
-docker push docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
+skopeo copy --dest-tls-verify=false --dest-creds=$(oc whoami):$(oc whoami -t) docker-daemon:docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9 docker://docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
+#docker push docker-registry-default.apps.${CLUSTER}/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
 
 # Create build config pipelines
 oc process -f ./Infrastructure/templates/mlbparks-pipeline-template.yaml --param REPO=${REPO} --param GUID=${GUID} --param CLUSTER=${CLUSTER} | oc create -f - -n ${GUID}-jenkins
