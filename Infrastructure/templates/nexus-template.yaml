@@ -164,7 +164,7 @@ objects:
     - ReadWriteOnce
     resources:
       requests:
-        storage: 1Gi
+        storage: 2Gi
 parameters:
 - name: GUID
   displayName: GUID

@@ -80,10 +80,16 @@ objects:
                 command:
                   - stat
                   - /tmp/initialized
-        volumes:
-        - emptyDir:
-            medium: ""
+    volumeClaimTemplates:
+      - metadata:
           name: mongo-data
+          labels:
+            name: "mongodb"
+        spec:
+          accessModes: [ ReadWriteOnce ]
+          resources:
+            requests:
+              storage: "${VOLUME_CAPACITY}"
 parameters:
 - name: MONGODB_USER
   displayName: MONGODB_USER
@@ -116,6 +122,10 @@ parameters:
   description: mongodb keyfile value
   value: "12345678901234567890"
   required: true
+- name: VOLUME_CAPACITY
+  displayName: VOLUME_CAPACITY
+  description: volume capacity
+  value: "1Gi"
 - name: MEMORY_LIMIT
   displayName: MEMORY_LIMIT
   description: memory limit

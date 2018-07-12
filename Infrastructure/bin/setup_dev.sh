@@ -21,7 +21,7 @@ DB_USERNAME="mongodb"
 DB_PASSWORD="mongodb"
 DB_NAME="parks"
 
-oc new-app mongodb-ephemeral --param MONGODB_DATABASE="${DB_NAME}" --param MONGODB_USER="${DB_USERNAME}" --param MONGODB_PASSWORD="${DB_PASSWORD}" --param MONGODB_ADMIN_PASSWORD="mongodb_admin_password" -n ${GUID}-parks-dev
+oc new-app mongodb-persistent --param MONGODB_DATABASE="${DB_NAME}" --param MONGODB_USER="${DB_USERNAME}" --param MONGODB_PASSWORD="${DB_PASSWORD}" --param MONGODB_ADMIN_PASSWORD="mongodb_admin_password" -n ${GUID}-parks-dev
 
 oc new-app -f ./Infrastructure/templates/mlbparks-dev-template.yaml \
 --param DB_HOST=${DB_HOST} \
