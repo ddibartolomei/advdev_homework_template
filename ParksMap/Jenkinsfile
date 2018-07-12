@@ -7,8 +7,8 @@ podTemplate(
     containerTemplate(
       name: "jnlp",
       image: "docker-registry.default.svc:5000/${GUID}-jenkins/jenkins-slave-maven-appdev:latest",
-      resourceRequestCpu: "1",
-      resourceLimitCpu: "2",
+      resourceRequestCpu: "500m",
+      resourceLimitCpu: "1",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi"
     )
