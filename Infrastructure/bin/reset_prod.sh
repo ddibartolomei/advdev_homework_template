@@ -28,6 +28,8 @@ mlbparksCurrent=$(oc get route mlbparks -n ddibarto-parks-prod --template='{{ .s
 if [ "$mlbparksCurrent" == "mlbparks-blue" ]
 then
   oc patch route mlbparks -n ${GUID}-parks-prod -p '{"spec":{"to":{"name":"mlbparks-green"}}}'
+else
+  echo "mlbparks route not patched because it is already on green target"
 fi
 
 # Reset nationalparks app
@@ -39,6 +41,8 @@ nationalparksCurrent=$(oc get route nationalparks -n ddibarto-parks-prod --templ
 if [ "$nationalparksCurrent" == "nationalparks-blue" ]
 then
   oc patch route nationalparks -n ${GUID}-parks-prod -p '{"spec":{"to":{"name":"nationalparks-green"}}}'
+else
+  echo "nationalparks route not patched because it is already on green target"
 fi
 
 # Reset parksmap app
@@ -46,4 +50,6 @@ parksmapCurrent=$(oc get route parksmap -n ddibarto-parks-prod --template='{{ .s
 if [ "$parksmapCurrent" == "parksmap-blue" ]
 then
   oc patch route parksmap -n ${GUID}-parks-prod -p '{"spec":{"to":{"name":"parksmap-green"}}}'
+else
+  echo "parksmap route not patched because it is already on green target"
 fi

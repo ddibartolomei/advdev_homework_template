@@ -129,13 +129,6 @@ podTemplate(
       }
 
       stage('Switch over to new Version') {
-        // Service label "switch" by service re-creation in order to invalidate discovered backend services cache
-        echo "'Moving' label type=parksmap-backend to ${destApp} (recreating blue/green services)."
-        sh "oc delete svc ${serviceId}-green -n ${GUID}-parks-prod"
-        sh "oc delete svc ${serviceId}-blue -n ${GUID}-parks-prod"
-        sh "oc expose dc ${destApp} --port 8080 -l type=parksmap-backend -n ${GUID}-parks-prod"
-        sh "oc expose dc ${passiveApp} --port 8080 -n ${GUID}-parks-prod"
-
         echo "Switching Production application to ${destApp}."
         sh "oc patch route ${serviceId} -n ${GUID}-parks-prod -p '{\"spec\":{\"to\":{\"name\":\"" + destApp + "\"}}}'"
       }
