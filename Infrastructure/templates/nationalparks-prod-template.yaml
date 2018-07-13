@@ -84,6 +84,13 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 256Mi
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -123,7 +130,6 @@ objects:
               configMapKeyRef:
                 name: nationalparks-green-config
                 key: app_name
-          resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         dnsPolicy: ClusterFirst
@@ -190,6 +196,13 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 256Mi
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -229,7 +242,6 @@ objects:
               configMapKeyRef:
                 name: nationalparks-blue-config
                 key: app_name
-          resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         dnsPolicy: ClusterFirst
